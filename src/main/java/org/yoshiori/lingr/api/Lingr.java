@@ -49,9 +49,16 @@ public class Lingr {
 	 * @return
 	 */
 	public boolean createSession() {
+		return createSession(null);
+	}
+
+	public boolean createSession(String appkey) {
 		PostMethod post = new PostMethod("http://lingr.com/api/session/create/");
 		post.addParameter("user", userName);
 		post.addParameter("password", password);
+		if(appkey != null) {
+			post.addParameter("app_key", appkey);
+		}
 		Map<String, Object> json = (Map<String, Object>) executeMethod(post);
 		session = String.class.cast(json.get("session"));
 		if (log.isDebugEnabled()) {
@@ -180,3 +187,4 @@ public class Lingr {
 		}
 	}
 }
+
